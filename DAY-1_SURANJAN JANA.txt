@@ -1,0 +1,114 @@
+Suranjan Jana
+
+Day-1
+Elenate-Lab SQL-internship.
+
+Objective: Learn to create databases, tables, and define relationships.
+Deliverables: SQL script to create schema and ER diagram
+
+
+---------SQL script to create schema---------
+-- elevate labs day-1 task ------------
+
+
+-- Database Creation
+Create database ecommerce;
+Use ecommerce;
+
+-- Create Customer Table
+CREATE TABLE Customer (
+    customer_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    address VARCHAR(255)
+);
+
+-- Create Product Table
+CREATE TABLE Product (
+    product_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    price DECIMAL(10, 2),
+    stock INT
+);
+
+-- Create Order Table
+CREATE TABLE OrderTable (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10, 2),
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+);
+
+-- Create OrderItem Table
+CREATE TABLE OrderItem (
+    order_item_id INT PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    price DECIMAL(10, 2),
+    FOREIGN KEY (order_id) REFERENCES OrderTable(order_id),
+    FOREIGN KEY (product_id) REFERENCES Product(product_id)
+);
+
+-- Create Category Table
+CREATE TABLE Category (
+    category_id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+-- Create ProductCategory Table
+CREATE TABLE ProductCategory (
+    product_id INT,
+    category_id INT,
+    PRIMARY KEY (product_id, category_id),
+    FOREIGN KEY (product_id) REFERENCES Product(product_id),
+    FOREIGN KEY (category_id) REFERENCES Category(category_id)
+);
+
+
+
+
+-----------------Primary Keys and Foreign Keys Defined------------------
+Primary Keys
+
+In our schema:
+
+Customer(customer_id) – uniquely identifies each customer.
+
+Product(product_id) – uniquely identifies each product.
+
+OrderTable(order_id) – uniquely identifies each order.
+
+OrderItem(order_item_id) – uniquely identifies each order item.
+
+Category(category_id) – uniquely identifies each product category.
+
+ProductCategory(product_id, category_id) – composite primary key to uniquely identify each product-category mapping.
+
+----------------------------------------------------------------------
+
+Foreign Keys
+
+In our schema:
+
+OrderTable.customer_id → references Customer.customer_id
+
+Each order is linked to a specific customer.
+
+OrderItem.order_id → references OrderTable.order_id
+
+Each item belongs to a specific order.
+
+OrderItem.product_id → references Product.product_id
+
+Each item is associated with a specific product.
+
+ProductCategory.product_id → references Product.product_id
+
+Links a product to a category.
+
+ProductCategory.category_id → references Category.category_id
+
+Links a category to a product.
+
